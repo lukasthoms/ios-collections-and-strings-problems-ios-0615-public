@@ -10,6 +10,8 @@
 
 @interface FISAppDelegate : UIResponder <UIApplicationDelegate>
 
+-(void) logWordsInABox: (NSArray*)words;
+
 @property (strong, nonatomic) UIWindow *window;
 
 @end

@@ -16,9 +16,52 @@
 @implementation FISAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    NSArray *helloArray = @[@"Hello", @"Worldly awesome", @"people", @"in", @"a", @"frame"];
+    [self logWordsInABox:helloArray];
     return YES;
 }
+
+-(void) logWordsInABox: (NSArray*)words {
+    
+    //find the max number of characters needed in the box
+    NSUInteger maxCharacters = 0;
+    for (NSString *word in words) {
+        if (word.length >= maxCharacters) {
+            maxCharacters = word.length;
+        }
+    }
+    // top of the box
+    NSMutableString *boxedWords = [@"\n" mutableCopy];
+    [boxedWords appendString:@"*"];
+    for (NSUInteger i=0; i <= maxCharacters; i++) {
+        [boxedWords appendString:@"*"];
+    }
+    
+    // middle of the box
+    for (NSString *word in words) {
+        NSMutableString *mutableWord = [word mutableCopy];
+        int neededSpaces = maxCharacters - word.length;
+        if (mutableWord.length < maxCharacters) {
+            for (NSUInteger i = 0; i < neededSpaces; i++) {
+                [mutableWord appendString:@" "];
+            }
+        }
+        [boxedWords appendFormat:@"\n*%@*",mutableWord];
+    }
+        NSLog(@"%@", boxedWords);
+    
+    // bottom of the box
+    for (NSUInteger i=0; i <= maxCharacters; i++) {
+        if (i == 0) {
+            [boxedWords appendFormat:@"\n"];
+        }
+        [boxedWords appendString:@"*"];
+    }
+    [boxedWords appendString:@"*"];
+    NSLog(@"%@", boxedWords);
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

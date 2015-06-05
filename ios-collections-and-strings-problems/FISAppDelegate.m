@@ -16,8 +16,11 @@
 @implementation FISAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSArray *helloArray = @[@"Hello", @"Worldly awesome", @"people", @"in", @"a", @"frame"];
+    NSArray *helloArray = @[@"Hello", @"iOS", @"people", @"I", @"think", @"you're", @"cool."];
     [self logWordsInABox:helloArray];
+    
+    NSString *englishSentence = @"You are really great and I love you";
+    [self translateToPigLatin:englishSentence];
     return YES;
 }
 
@@ -59,6 +62,24 @@
     }
     [boxedWords appendString:@"*"];
     NSLog(@"%@", boxedWords);
+}
+
+- (NSString*) translateToPigLatin: (NSString*) input {
+    NSArray *singleWords = [input componentsSeparatedByString:@" "];
+    NSMutableString *pigLatinSentence = [[NSMutableString alloc] init];
+    for (NSString *word in singleWords) {
+        NSMutableString *mutableWord = [word mutableCopy];
+        [mutableWord appendFormat:@"%C", [mutableWord characterAtIndex:0]];
+        mutableWord = [[mutableWord substringFromIndex:1] mutableCopy];
+        [mutableWord appendString:@"ay"];
+        if ([word isEqualToString:[[input componentsSeparatedByString:@" "] objectAtIndex:0]]) {
+            mutableWord = [[mutableWord capitalizedString] mutableCopy];
+        }
+        [pigLatinSentence appendFormat:@"%@ ",mutableWord];
+    }
+    NSString *finalPigLatin = [pigLatinSentence substringToIndex:[pigLatinSentence length]-1];
+    NSLog(@"%@", finalPigLatin);
+    return nil;
 }
 
 
